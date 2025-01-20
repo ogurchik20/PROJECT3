@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Bot Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h1 class="text-center">Управление Telegram Bot </h1>
+        <!-- Команды -->
+        <div class="card my-4">
+            <div class="card-header">Управление ботом</div>
+            <div class="card-body">
+                <a href="/view_commands" class="btn btn-info mb-2">Посмотреть список команд</a>
+                <a href="/view_random_messages" class="btn btn-info mb-2">Посмотреть список рандомных сообщений</a>
+                <a href="/statistics" class="btn btn-info mb-2">Посмотреть статистику команд</a>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMessageModal">
+                    Добавить рандомное сообщение
+                </button>
+            </div>
+        </div>
+
+        <!-- Модальное окно для добавления сообщения -->
+        <div class="modal fade" id="addMessageModal" tabindex="-1" aria-labelledby="addMessageModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addMessageModalLabel">Добавить рандомное сообщение</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/add_random_message" method="POST">
+                            <div class="mb-3">
+                                <label for="random_message" class="form-label">Сообщение</label>
+                                <textarea class="form-control" id="random_message" name="random_message" rows="3" placeholder="Введите сообщение" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Добавить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Таблица команд -->
+        {% if commands %}
+        <div class="card my-4">
+            <div class="card-header">Список команд</div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for command in commands %}
+                    <li class="list-group-item">{{ command }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Таблица рандомных сообщений -->
+        {% if random_messages %}
+        <div class="card my-4">
+            <div class="card-header">Список рандомных сообщений</div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for message in random_messages %}
+                    <li class="list-group-item">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        <!-- Кнопка выхода -->
+        <a href="/logout" class="btn btn-danger">Выйти</a>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
